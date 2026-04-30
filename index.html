@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能家居仿真系统 - 能耗统计</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", sans-serif;
+        }
+
+        body {
+            background: #050a1f;
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px 15px;
+            background-image: radial-gradient(circle at 50% 30%, #102048 0%, #050a1f 70%);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 26px;
+            background: linear-gradient(90deg, #00c6ff, #7209ff);
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .desc {
+            color: #8ab4f8;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* 手机适配 */
+        @media (max-width:768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: rgba(15, 30, 60, 0.6);
+            border: 1px solid rgba(0, 180, 255, 0.3);
+            border-radius: 14px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+        }
+
+        .card-title {
+            font-size: 18px;
+            color: #00e5ff;
+            margin-bottom: 20px;
+            border-left: 4px solid #00c6ff;
+            padding-left: 10px;
+        }
+
+        /* 设备项 */
+        .device-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(0, 180, 255, 0.15);
+        }
+
+        .device-item:last-child {
+            border-bottom: none;
+        }
+
+        .device-name {
+            font-size: 15px;
+            color: #b0c4de;
+        }
+
+        /* 开关按钮 */
+        .switch {
+            width: 50px;
+            height: 26px;
+            background: #223;
+            border-radius: 30px;
+            position: relative;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .switch.on {
+            background: #00c6ff;
+        }
+
+        .switch::after {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            background: #fff;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: 0.3s;
+        }
+
+        .switch.on::after {
+            left: 26px;
+        }
+
+        /* 能耗统计 */
+        .energy-info {
+            margin-top: 15px;
+        }
+
+        .energy-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            font-size: 15px;
+            border-bottom: 1px solid rgba(0,180,255,0.15);
+        }
+
+        .energy-label {
+            color: #8ab4f8;
+        }
+
+        .energy-value {
+            color: #00e5ff;
+            font-weight: bold;
+        }
+
+        /* 房间模拟区域 */
+        .room-box {
+            width: 100%;
+            height: 220px;
+            background: rgba(0,50,100,0.2);
+            border-radius: 12px;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8ab4f8;
+            border: 1px dashed rgba(0,180,255,0.3);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #6688bb;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>智能家居仿真系统</h1>
+        <div class="desc">设备智能控制 + 实时能耗统计仿真平台</div>
+    </header>
+
+    <div class="container">
+        <!-- 设备控制面板 -->
+        <div class="card">
+            <div class="card-title">设备控制</div>
+
+            <div class="device-item">
+                <span class="device-name">客厅灯光 (60W)</span>
+                <div class="switch" id="light1" data-power="60" onclick="toggleDevice(this)"></div>
+            </div>
+
+            <div class="device-item">
+                <span class="device-name">空调 (1200W)</span>
+                <div class="switch" id="aircon" data-power="1200" onclick="toggleDevice(this)"></div>
+            </div>
+
+            <div class="device-item">
+                <span class="device-name">智能窗帘</span>
+                <div class="switch" id="curtain" data-power="10" onclick="toggleDevice(this)"></div>
+            </div>
+
+            <div class="device-item">
+                <span class="device-name">厨房插座 (300W)</span>
+                <div class="switch" id="socket" data-power="300" onclick="toggleDevice(this)"></div>
+            </div>
+
+        </div>
+
+        <!-- 能耗统计面板 -->
+        <div class="card">
+            <div class="card-title">能耗统计</div>
+            <div class="energy-info">
+                <div class="energy-row">
+                    <span class="energy-label">当前运行功率</span>
+                    <span class="energy-value" id="nowPower">0 W</span>
+                </div>
+                <div class="energy-row">
+                    <span class="energy-label">今日耗电量</span>
+                    <span class="energy-value" id="dayEnergy">0.00 度</span>
+                </div>
+                <div class="energy-row">
+                    <span class="energy-label">设备开启数量</span>
+                    <span class="energy-value" id="openCount">0 台</span>
+                </div>
+            </div>
+
+            <div class="room-box">
+                智能家居房间仿真区域
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        智能家居仿真系统 · 能耗实时监测版
+    </footer>
+
+    <script>
+        // 初始化数据
+        let totalPower = 0;
+        let dayDegree = 0;
+
+        // 切换设备状态
+        function toggleDevice(el) {
+            el.classList.toggle('on');
+            let power = parseInt(el.dataset.power);
+
+            if(el.classList.contains('on')){
+                totalPower += power;
+            }else{
+                totalPower -= power;
+            }
+            updateEnergy();
+        }
+
+        // 更新能耗数据
+        function updateEnergy(){
+            // 当前功率
+            document.getElementById('nowPower').innerText = totalPower + " W";
+            // 用电量 1度 = 1000W/h 简易仿真
+            dayDegree = (totalPower / 1000).toFixed(2);
+            document.getElementById('dayEnergy').innerText = dayDegree + " 度";
+            // 统计开启设备数
+            let openNum = document.querySelectorAll('.switch.on').length;
+            document.getElementById('openCount').innerText = openNum + " 台";
+        }
+    </script>
+
+</body>
+</html>
