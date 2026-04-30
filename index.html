@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI工具导航站 | 科技风</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{
+            font-family: "Microsoft Yahei",sans-serif;
+            background: #050a1f;
+            color: #fff;
+            min-height: 100vh;
+            background-image: radial-gradient(circle at 50% 50%, #102048 0%, #050a1f 70%);
+        }
+        /* 顶部导航 */
+        header{
+            padding: 20px 15px;
+            text-align: center;
+            border-bottom: 1px solid rgba(0,180,255,0.2);
+        }
+        h1{
+            font-size: 28px;
+            background: linear-gradient(90deg,#00c6ff,#7209ff);
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 8px;
+        }
+        .desc{
+            color: #8ab4f8;
+            font-size: 15px;
+        }
+        /* 容器 */
+        .container{
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 15px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
+            gap: 20px;
+        }
+        /* AI卡片 */
+        .ai-card{
+            background: rgba(15,30,60,0.6);
+            border: 1px solid rgba(0,180,255,0.3);
+            border-radius: 12px;
+            padding: 25px 20px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        .ai-card:hover{
+            transform: translateY(-6px);
+            border-color: #00c6ff;
+            box-shadow: 0 10px 30px rgba(0,180,255,0.25);
+        }
+        .ai-card h3{
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #00e5ff;
+        }
+        .ai-card p{
+            color: #b0c4de;
+            font-size: 14px;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        .ai-card a{
+            display: inline-block;
+            padding: 8px 20px;
+            background: linear-gradient(90deg,#0099ff,#6a00ff);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 14px;
+        }
+        /* 底部 */
+        footer{
+            text-align: center;
+            padding: 30px 15px;
+            color: #6688bb;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>AI 工具导航中心</h1>
+        <div class="desc">全网热门AI工具合集 · 免费好用 · 一键直达</div>
+    </header>
+
+    <div class="container">
+        <div class="ai-card">
+            <h3>豆包AI</h3>
+            <p>全能聊天、写作、编程、解题一站式AI</p>
+            <a href="https://www.doubao.com" target="_blank">立即访问</a>
+        </div>
+        <div class="ai-card">
+            <h3>文心一言</h3>
+            <p>百度大模型，文案创作、论文改写必备</p>
+            <a href="https://yiyan.baidu.com" target="_blank">立即访问</a>
+        </div>
+        <div class="ai-card">
+            <h3>通义千问</h3>
+            <p>阿里AI，逻辑推理、办公文档生成</p>
+            <a href="https://tongyi.aliyun.com" target="_blank">立即访问</a>
+        </div>
+        <div class="ai-card">
+            <h3>无界AI绘画</h3>
+            <p>AI生成插画、二次元、风景人像</p>
+            <a href="https://www.wujieai.com" target="_blank">立即访问</a>
+        </div>
+        <div class="ai-card">
+            <h3>一键AI抠图</h3>
+            <p>在线抠图、证件照、背景替换</p>
+            <a href="https://www.remove.bg" target="_blank">立即访问</a>
+        </div>
+        <div class="ai-card">
+            <h3>秘塔写作猫</h3>
+            <p>论文降重、文案改写、语法纠错</p>
+            <a href="https://xiezuocat.com" target="_blank">立即访问</a>
+        </div>
+    </div>
+
+    <footer>
+        © 2026 AI工具导航站 科技风简约版
+    </footer>
+</body>
+</html>
